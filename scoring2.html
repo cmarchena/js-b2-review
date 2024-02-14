@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoring</title>
+    <style>
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 52%;
+        }
+
+        .form-group {
+            display: block;
+            width: 35%;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Scoring</h1>
+    <form>
+        <div class="form-group">
+
+            <label for="requirements">Requirements</label>
+            <select name="requirements" id="requirements">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="form-group">
+
+            <label for="coding-standards">Coding Standards</label>
+            <select name="coding-standards" id="coding-standards">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="form-group">
+
+            <label for="documentation">Documentation</label>
+            <select name="documentation" id="documentation">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="form-group">
+
+            <label for="runtime">Runtime</label>
+            <select name="runtime" id="runtime">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="form-group">
+
+            <label for="efficiency">Efficiency</label>
+            <select name="efficiency" id="efficiency">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+    </form>
+    <button id="submit">Submit</button>
+    <p id="result"></p>
+    <script>
+        const weights = {
+            "requirements": 5,
+            "coding": 2,
+            "documentation": 0.5,
+            "runtime": 2,
+            "efficiency": 0.5
+
+        }
+        const buttonEl = document.getElementById("submit")
+        buttonEl.addEventListener("click", () => {
+            const scores = []
+            const requirementsEl = document.getElementById("requirements");
+            const requirementsScore = requirementsEl.options[requirementsEl.selectedIndex].value;
+            scores.push(Number(requirementsScore))
+            const codingEl = document.getElementById("coding-standards");
+            const codingScore = codingEl.options[codingEl.selectedIndex].value;
+            scores.push(Number(codingScore))
+            const documentationEl = document.getElementById("documentation");
+            const documentationScore = documentationEl.options[documentationEl.selectedIndex].value;
+            scores.push(Number(documentationScore))
+            const runtimeEl = document.getElementById("runtime");
+            const runtimeScore = runtimeEl.options[runtimeEl.selectedIndex].value;
+            scores.push(Number(runtimeScore))
+            const efficiencyEl = document.getElementById("efficiency");
+            const efficiencyScore = efficiencyEl.options[efficiencyEl.selectedIndex].value;
+            scores.push(Number(efficiencyScore))
+            console.log(scores)
+            function calculateScore(scores) {
+                return scores.reduce((curr, prev, index) => {
+                    return curr + prev * weights[Object.keys(weights)[index]]
+                }, 0)
+            }
+            console.log(calculateScore(scores))
+            const resultEl = document.getElementById("result")
+            const finalScore = calculateScore(scores)
+            function calculatePerformance(result, max) {
+                if (result < max * 0.4) {
+                    return 'Unsatisfactory'
+                }
+                if (result >= max * 0.4 && result < max * 0.8) {
+                    return 'Satisfactory'
+                }
+                if (result >= max * 0.8 && result < max) {
+                    return 'Good'
+                }
+                if (result === max) {
+                    return 'Excellent'
+                }
+            }
+            resultEl.innerHTML = `Student score is ${finalScore.toFixed(2)}, performance level: ${calculatePerformance(finalScore, 40)}`
+
+
+        })
+    </script>
+</body>
+
+</html>

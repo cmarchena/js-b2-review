@@ -1,0 +1,21 @@
+{
+  "name": "front-tests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "cmarchena <sprintwithcarlos@pm.me>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --json --outputFile=test-results.json"
+  },
+  "dependencies": {
+    "jest": "^29.7.0",
+    "jsdom": "^24.0.0",
+    "text-encoding": "^0.7.0"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^6.4.2",
+    "html-loader": "^5.0.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
